@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/mainScreen">
+
+    <fragment
+        android:id="@+id/mainScreen"
+        android:name="com.jlopez.mathtrainer.MainScreen.MainScreen"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_mainScreen_to_problemFragment"
+            app:destination="@id/problemFragment"
+            app:popUpTo="@id/mainScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/problemFragment"
+        android:name="com.jlopez.mathtrainer.ProblemScreen.ProblemFragment"
+        android:label="fragment_problem"
+        tools:layout="@layout/fragment_problem" >
+        <argument
+            android:name="operatorRequested"
+            app:argType="string"
+            android:defaultValue="+" />
+        <action
+            android:id="@+id/action_problemFragment_to_resultScreen"
+            app:destination="@id/resultScreen"
+            app:popUpTo="@id/mainScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultScreen"
+        android:name="com.jlopez.mathtrainer.ResultScreen.ResultScreen"
+        android:label="fragment_result_screen"
+        tools:layout="@layout/fragment_result_screen" >
+        <argument
+            android:name="correctAmount"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="totalQuestions"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="firstOperands"
+            app:argType="integer[]" />
+        <argument
+            android:name="secondOperands"
+            app:argType="integer[]" />
+        <argument
+            android:name="operators"
+            app:argType="string[]" />
+        <argument
+            android:name="answers"
+            app:argType="integer[]" />
+        <argument
+            android:name="questionAttempts"
+            app:argType="integer[]" />
+    </fragment>
+</navigation>
