@@ -7,9 +7,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jlopez.mathtrainer.remote.responses.MathQuestion
 import com.jlopez.mathtrainer.repository.MathRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,6 +41,12 @@ class ProblemFragmentViewModel @Inject constructor(
     private val _isQuizFinished = MutableStateFlow<Boolean>(false)
     val isQuizFinished: StateFlow<Boolean> = _isQuizFinished
 
+    private val _timeTaken = MutableStateFlow<Long>(0) // Might not need this
+    val timeTaken: StateFlow<Long> = _timeTaken
+
+    private val _timer = MutableStateFlow<String>("0:00")
+    val timer: StateFlow<String> = _timer
+
     // Question Statistics
     var questionsCorrect = 0
     val questionAttempts: MutableList<Int> = ArrayList()
@@ -53,6 +61,9 @@ class ProblemFragmentViewModel @Inject constructor(
     private lateinit var currentMathQuestion: MathQuestion
 
 
+    init {
+        startTimer()
+    }
 
     fun getNewMathProblem() {
         questionAttempts.add(0)
@@ -67,6 +78,21 @@ class ProblemFragmentViewModel @Inject constructor(
             setNewValues()
         }
     }
+
+    // Will this cause a memory leak???
+    private fun startTimer(){
+        viewModelScope.launch {
+            while(true){
+                delay(1000)
+                _timeTaken.value += 1000
+                val ms = String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(_timeTaken.value) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(_timeTaken.value) % TimeUnit.MINUTES.toSeconds(1))
+                _timer.value = ms
+            }
+        }
+    }
+
 
 
     private fun setNewValues() {

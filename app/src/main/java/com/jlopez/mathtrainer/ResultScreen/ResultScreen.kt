@@ -70,6 +70,7 @@ class ResultScreen : Fragment() {
                 Color.RED
             )
         )
+        binding.timeTakenTv.text = args.timeTaken
     }
 
 

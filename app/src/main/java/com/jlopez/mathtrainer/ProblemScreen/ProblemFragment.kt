@@ -70,6 +70,11 @@ class ProblemFragment : Fragment() {
                         binding.questionsLeft.text = "$it/10"
                     }
                 }
+                launch{
+                    model.timer.collectLatest {
+                        binding.time.text = it
+                    }
+                }
                 launch {
                     model.isQuizFinished.collectLatest {
                         if(model.isQuizFinished.value){
@@ -82,6 +87,7 @@ class ProblemFragment : Fragment() {
                                 model.questionAttempts.toIntArray()
                             ).setCorrectAmount(model.questionsCorrect)
                                 .setTotalQuestions(model.totalQuestions.value)
+                                .setTimeTaken(model.timer.value)
 
                             findNavController().navigate(action)
                         }

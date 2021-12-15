@@ -28,7 +28,7 @@ class ResultScreenAdapter(private val questionList: List<MathQuestion>, private 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentQuestion = questionList[position]
         holder.questionText.text = currentQuestion.expression
-        holder.attemptsText.text = attemptsList[position].toString()
+        holder.attemptsText.text = (attemptsList[position]+1).toString()
 
     }
 

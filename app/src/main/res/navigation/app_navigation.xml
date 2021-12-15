@@ -57,5 +57,9 @@
         <argument
             android:name="questionAttempts"
             app:argType="integer[]" />
+        <argument
+            android:name="timeTaken"
+            app:argType="string"
+            android:defaultValue="0:00" />
     </fragment>
 </navigation>
