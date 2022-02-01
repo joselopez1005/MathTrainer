@@ -55,7 +55,7 @@ class ProblemFragment : Fragment() {
 
     private fun subscribeToObservables() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     model.firstOperand.collectLatest { binding.firstOperand.text = it.toString() }
                 }
